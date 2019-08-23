@@ -17,13 +17,13 @@ public class ContactController {
     @Autowired
     ContactService contactService;
 
-    @PostMapping("/create")
-    public ResponseEntity create(@Valid @RequestBody Contact contact) {
+    @PostMapping("/contacts")
+    public ResponseEntity createContact(@Valid @RequestBody Contact contact) {
         return contactService.createContact(contact);
     }
 
     @GetMapping("/contact/{id}")
-    public ResponseEntity get(@PathVariable(value = "id") Integer id){
+    public ResponseEntity getContact(@PathVariable(value = "id") Integer id){
         return contactService.getContact(id);
     }
 }
