@@ -5,10 +5,8 @@ import com.shams.spring.rest.practice.comshamsspringrestpractice.service.Contact
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @Controller
@@ -23,12 +21,22 @@ public class ContactController {
     }
 
     @GetMapping("/contacts")
-    public ResponseEntity contacts() {
+    public ResponseEntity getContacts() {
         return contactService.getAllContacts();
     }
 
-    @GetMapping("/contact/{id}")
+    @GetMapping("/contacts/{id}")
     public ResponseEntity getContact(@PathVariable(value = "id") Integer id){
         return contactService.getContact(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity updateContact(@PathVariable(value = "id") Integer id, @Valid @RequestBody Contact contact) {
+        return contactService.updateContact(id, contact);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteContact(@PathVariable(value = "id") Integer id) {
+        return contactService.deleteContact(id);
     }
 }
