@@ -8,8 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContactService {
@@ -30,7 +31,15 @@ public class ContactService {
     }
 
     public ResponseEntity getContact(Integer id) {
-        Contact contact = contactRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contact doesn't exist!!"));
-        return ResponseEntity.status(HttpStatus.OK).body(contact);
+        Optional<Contact> contact = contactRepository.findById(id);
+        if (contact.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(contact);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contact doesn't exist!!");
+    }
+
+    public ResponseEntity getAllContacts() {
+        List<Contact> contactList = (List<Contact>) contactRepository.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(contactList);
     }
 }

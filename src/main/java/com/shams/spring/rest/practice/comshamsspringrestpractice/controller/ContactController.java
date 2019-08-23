@@ -22,6 +22,11 @@ public class ContactController {
         return contactService.createContact(contact);
     }
 
+    @GetMapping("/contacts")
+    public ResponseEntity contacts() {
+        return contactService.getAllContacts();
+    }
+
     @GetMapping("/contact/{id}")
     public ResponseEntity getContact(@PathVariable(value = "id") Integer id){
         return contactService.getContact(id);
